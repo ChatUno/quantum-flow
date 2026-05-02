@@ -819,6 +819,13 @@ class QuantumFlow {
         fetch(url, {
           ...options,
           signal: this.abortController.signal,
+          mode: "cors",
+          headers: {
+            ...options.headers,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          },
         }),
         timeoutPromise,
       ]);
@@ -1775,6 +1782,12 @@ class QuantumFlow {
       const response = await fetch(this.state.stressTest.url, {
         method: "GET",
         signal: AbortSignal.timeout(5000),
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
       });
 
       const endTime = performance.now();
