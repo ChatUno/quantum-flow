@@ -2917,7 +2917,7 @@ ${index + 1}. Status: ${req.status}, Latency: ${req.latency}ms, Timestamp: ${new
     const cspMeta = document.createElement("meta");
     cspMeta.httpEquiv = "Content-Security-Policy";
     cspMeta.content =
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://httpbin.org https://api.example.com https://*.httpbin.org; font-src 'self'; object-src 'none';";
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://httpbin.org https://api.example.com https://*.httpbin.org https://bookstoread.ai https://*.bookstoread.ai; font-src 'self'; object-src 'none';";
     document.head.appendChild(cspMeta);
   }
 
