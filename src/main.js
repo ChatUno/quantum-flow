@@ -3966,8 +3966,8 @@ ${index + 1}. Status: ${req.status}, Latency: ${req.latency}ms, Timestamp: ${new
 
   // Countdown timer methods
   initializeCountdown() {
-    // Target date: 11/05/2026 at 16:00 PM
-    this.targetDate = new Date("2026-05-11T16:00:00").getTime();
+    // Target date: 19/06/2026 at 21:00 PM
+    this.targetDate = new Date("2026-06-19T21:00:00").getTime();
 
     // Update countdown every second
     this.countdownInterval = setInterval(() => {
