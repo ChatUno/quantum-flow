@@ -815,16 +815,20 @@ class QuantumFlow {
     });
 
     try {
+      // Use CORS proxy for external APIs that don't allow direct CORS
+      let proxyUrl = url;
+      if (url.includes("bookstoread.ai") || url.includes("api.example.com")) {
+        proxyUrl = `https://cors-anywhere.herokuapp.com/${url}`;
+      }
+
       const response = await Promise.race([
-        fetch(url, {
+        fetch(proxyUrl, {
           ...options,
           signal: this.abortController.signal,
           mode: "cors",
           headers: {
             ...options.headers,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "X-Requested-With": "XMLHttpRequest",
           },
         }),
         timeoutPromise,
@@ -1779,14 +1783,21 @@ class QuantumFlow {
     const startTime = performance.now();
 
     try {
-      const response = await fetch(this.state.stressTest.url, {
+      // Use CORS proxy for external APIs
+      let proxyUrl = this.state.stressTest.url;
+      if (
+        this.state.stressTest.url.includes("bookstoread.ai") ||
+        this.state.stressTest.url.includes("api.example.com")
+      ) {
+        proxyUrl = `https://cors-anywhere.herokuapp.com/${this.state.stressTest.url}`;
+      }
+
+      const response = await fetch(proxyUrl, {
         method: "GET",
         signal: AbortSignal.timeout(5000),
         mode: "cors",
         headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "X-Requested-With": "XMLHttpRequest",
         },
       });
 
