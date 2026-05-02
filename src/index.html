@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Quantum-Flow | Webhook Analysis & Performance Platform</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='faviconGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color: %237c3aed'/><stop offset='50%25' style='stop-color: %2306b6d4'/><stop offset='100%25' style='stop-color: %238b5cf6'/></linearGradient><linearGradient id='energyGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color: %2306b6d4'/><stop offset='100%25' style='stop-color: %238b5cf6'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23faviconGrad)' opacity='0.9'/><circle cx='50' cy='50' r='35' fill='none' stroke='white' stroke-width='2' opacity='0.8'/><circle cx='50' cy='50' r='25' fill='none' stroke='white' stroke-width='1.5' opacity='0.6'/><path d='M50 25 Q65 35 50 55 Q35 35 50 25' fill='url(%23energyGrad)' opacity='0.7'/><path d='M25 50 Q35 65 55 50 Q35 35 25 50' fill='url(%23energyGrad)' opacity='0.5'/><path d='M75 50 Q65 35 45 50 Q65 65 75 50' fill='url(%23energyGrad)' opacity='0.5'/><circle cx='50' cy='50' r='8' fill='white' opacity='0.95'/><circle cx='50' cy='50' r='4' fill='%237c3aed'/></svg>"
+    />
+  </head>
+  <body>
+    <!-- Premium Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-backdrop">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="noise-overlay"></div>
+      </div>
+
+      <div class="loading-container">
+        <div class="brand-system">
+          <div class="logo-container">
+            <div class="logo-core">
+              <div class="logo-particle particle-1"></div>
+              <div class="logo-particle particle-2"></div>
+              <div class="logo-particle particle-3"></div>
+              <div class="logo-particle particle-4"></div>
+              <div class="logo-particle particle-5"></div>
+              <div class="logo-particle particle-6"></div>
+              <div class="logo-center">
+                <svg
+                  class="logo-icon"
+                  viewBox="0 0 64 64"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient
+                      id="logoGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop
+                        offset="0%"
+                        style="stop-color: #7c3aed; stop-opacity: 1"
+                      />
+                      <stop
+                        offset="50%"
+                        style="stop-color: #06b6d4; stop-opacity: 1"
+                      />
+                      <stop
+                        offset="100%"
+                        style="stop-color: #8b5cf6; stop-opacity: 1"
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="energyGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop
+                        offset="0%"
+                        style="stop-color: #06b6d4; stop-opacity: 0.8"
+                      />
+                      <stop
+                        offset="100%"
+                        style="stop-color: #8b5cf6; stop-opacity: 0.4"
+                      />
+                    </linearGradient>
+                    <filter id="logoGlow">
+                      <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                      <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <!-- Hexagon Base -->
+                  <path
+                    d="M32 8 L48 16 L48 32 L32 40 L16 32 L16 16 Z"
+                    fill="url(#logoGradient)"
+                    filter="url(#logoGlow)"
+                    opacity="0.9"
+                  />
+
+                  <!-- Inner Hexagon -->
+                  <path
+                    d="M32 14 L42 20 L42 28 L32 34 L22 28 L22 20 Z"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="1.5"
+                    opacity="0.7"
+                  />
+
+                  <!-- Energy Flow Lines -->
+                  <path
+                    d="M32 18 L32 30"
+                    stroke="url(#energyGradient)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    opacity="0.8"
+                  />
+                  <path
+                    d="M26 22 L38 26"
+                    stroke="url(#energyGradient)"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    opacity="0.6"
+                  />
+                  <path
+                    d="M26 26 L38 22"
+                    stroke="url(#energyGradient)"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    opacity="0.6"
+                  />
+
+                  <!-- Center Core -->
+                  <circle cx="32" cy="24" r="3" fill="white" opacity="0.95" />
+
+                  <!-- Energy Particles -->
+                  <circle cx="32" cy="18" r="1.5" fill="#06b6d4" opacity="0.8">
+                    <animate
+                      attributeName="opacity"
+                      values="0.8;0.3;0.8"
+                      dur="2s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                  <circle cx="26" cy="22" r="1" fill="#8b5cf6" opacity="0.6">
+                    <animate
+                      attributeName="opacity"
+                      values="0.6;0.2;0.6"
+                      dur="2.5s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                  <circle cx="38" cy="22" r="1" fill="#8b5cf6" opacity="0.6">
+                    <animate
+                      attributeName="opacity"
+                      values="0.6;0.2;0.6"
+                      dur="2.5s"
+                      begin="0.5s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                  <circle cx="26" cy="26" r="1" fill="#06b6d4" opacity="0.6">
+                    <animate
+                      attributeName="opacity"
+                      values="0.6;0.2;0.6"
+                      dur="3s"
+                      begin="1s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                  <circle cx="38" cy="26" r="1" fill="#06b6d4" opacity="0.6">
+                    <animate
+                      attributeName="opacity"
+                      values="0.6;0.2;0.6"
+                      dur="3s"
+                      begin="1.5s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+
+                  <!-- Outer Energy Ring -->
+                  <path
+                    d="M32 6 L50 15 L50 33 L32 42 L14 33 L14 15 Z"
+                    fill="none"
+                    stroke="url(#energyGradient)"
+                    stroke-width="1"
+                    stroke-dasharray="2,3"
+                    opacity="0.4"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 32 24"
+                      to="360 32 24"
+                      dur="20s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </svg>
+              </div>
+              <div class="logo-ring ring-outer"></div>
+              <div class="logo-ring ring-middle"></div>
+              <div class="logo-ring ring-inner"></div>
+            </div>
+          </div>
+
+          <div class="brand-content">
+            <h1 class="brand-title">
+              <span class="title-word">Quantum</span>
+              <span class="title-word">Flow</span>
+            </h1>
+            <p class="brand-subtitle">
+              Webhook Analysis & Performance Platform
+            </p>
+            <div class="brand-tagline">
+              Advanced Network Intelligence & Monitoring
+            </div>
+          </div>
+        </div>
+
+        <div class="loading-system">
+          <div class="progress-container">
+            <div class="progress-track">
+              <div class="progress-fill">
+                <div class="progress-shine"></div>
+              </div>
+            </div>
+            <div class="progress-percentage">0%</div>
+          </div>
+
+          <div class="status-container">
+            <div class="status-dots">
+              <div class="status-dot active"></div>
+              <div class="status-dot"></div>
+              <div class="status-dot"></div>
+            </div>
+            <div class="status-text">Initializing quantum core...</div>
+          </div>
+        </div>
+
+        <div class="loading-footer">
+          <div class="version-info">v1.0</div>
+          <div class="copyright">© 2026 Quantum-Flow Systems</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Privacy Policy Overlay -->
+    <div id="privacy-overlay" class="privacy-overlay hidden">
+      <div class="privacy-backdrop"></div>
+      <div class="privacy-modal">
+        <h2 class="privacy-title">Privacy Policy</h2>
+        <div class="privacy-content">
+          <p>
+            This application processes webhooks and network requests for
+            forensic analysis purposes.
+          </p>
+          <p>
+            <strong>Data Collection:</strong> IP addresses, request headers, and
+            payload data are stored locally in your browser.
+          </p>
+          <p>
+            <strong>Usage:</strong> No data is transmitted to external servers
+            except for the webhooks you explicitly test.
+          </p>
+          <p>
+            <strong>Storage:</strong> All data is stored locally using IndexedDB
+            and can be cleared at any time.
+          </p>
+        </div>
+        <div class="privacy-actions">
+          <label class="privacy-checkbox-label">
+            <input type="checkbox" id="privacy-accept" />
+            <span>I accept the privacy policy and data processing terms</span>
+          </label>
+          <button id="privacy-continue" class="privacy-continue-btn" disabled>
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <main class="quantum-flow hidden">
+      <!-- Header Navigation -->
+      <header class="header">
+        <nav class="nav">
+          <div class="brand-container">
+            <div class="header-logo">
+              <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient
+                    id="headerLogoGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop
+                      offset="0%"
+                      style="stop-color: #7c3aed; stop-opacity: 1"
+                    />
+                    <stop
+                      offset="50%"
+                      style="stop-color: #06b6d4; stop-opacity: 1"
+                    />
+                    <stop
+                      offset="100%"
+                      style="stop-color: #8b5cf6; stop-opacity: 1"
+                    />
+                  </linearGradient>
+                  <linearGradient
+                    id="headerEnergyGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop
+                      offset="0%"
+                      style="stop-color: #06b6d4; stop-opacity: 0.8"
+                    />
+                    <stop
+                      offset="100%"
+                      style="stop-color: #8b5cf6; stop-opacity: 0.4"
+                    />
+                  </linearGradient>
+                  <filter id="headerLogoGlow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+                    <feMerge>
+                      <feMergeNode in="coloredBlur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <!-- Hexagon Base -->
+                <path
+                  d="M32 8 L48 16 L48 32 L32 40 L16 32 L16 16 Z"
+                  fill="url(#headerLogoGradient)"
+                  filter="url(#headerLogoGlow)"
+                  opacity="0.9"
+                />
+
+                <!-- Inner Hexagon -->
+                <path
+                  d="M32 14 L42 20 L42 28 L32 34 L22 28 L22 20 Z"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="1.5"
+                  opacity="0.7"
+                />
+
+                <!-- Energy Flow Lines -->
+                <path
+                  d="M32 18 L32 30"
+                  stroke="url(#headerEnergyGradient)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  opacity="0.8"
+                />
+                <path
+                  d="M26 22 L38 26"
+                  stroke="url(#headerEnergyGradient)"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  opacity="0.6"
+                />
+                <path
+                  d="M26 26 L38 22"
+                  stroke="url(#headerEnergyGradient)"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  opacity="0.6"
+                <circle cx="38" cy="26" r="1" fill="#06b6d4" opacity="0.6">
+                  <animate
+                    attributeName="opacity"
+                    values="0.6;0.2;0.6"
+                    dur="3s"
+                    begin="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+
+                <!-- Outer Energy Ring -->
+                <path
+                  d="M32 6 L50 15 L50 33 L32 42 L14 33 L14 15 Z"
+                  fill="none"
+                  stroke="url(#headerEnergyGradient)"
+                  stroke-width="1"
+                  stroke-dasharray="2,3"
+                  opacity="0.4"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    attributeType="XML"
+                    type="rotate"
+                    from="0 32 24"
+                    to="360 32 24"
+                    dur="20s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+            <h1 class="title">Quantum-Flow</h1>
+            <div class="beta-badge">BETA v1.0</div>
+                      </div>
+          <div class="nav-tabs">
+            <button
+              id="nav-gateway-tab"
+              class="nav-tab active"
+              data-view="gateway"
+            >
+              Gateway
+            </button>
+            <button id="nav-archive-tab" class="nav-tab" data-view="archive">
+              Archive
+            </button>
+            <button id="nav-stress-tab" class="nav-tab" data-view="stress">
+              Stress
+            </button>
+            <button id="nav-pulse-tab" class="nav-tab" data-view="pulse">
+              Pulse
+            </button>
+            <button id="nav-waitlist-tab" class="nav-tab" data-view="waitlist">
+              Waitlist
+            </button>
+            <button id="nav-legal-tab" class="nav-tab" data-view="legal">
+              Legal
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Status Bar -->
+      <div id="global-status-bar" class="status-bar">
+        <span class="status-text">Ready</span>
+        <span class="status-indicator"></span>
+      </div>
+
+      <!-- Gateway View -->
+      <section id="gateway-view" class="view active">
+        <div class="gateway-container">
+          <div class="request-panel">
+            <div class="input-group">
+              <select id="gate-method-select" class="method-select">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+                <option value="PATCH">PATCH</option>
+              </select>
+              <input
+                id="gate-request-input"
+                type="url"
+                class="url-input"
+                placeholder="Enter webhook URL..."
+              />
+              <button id="gate-send-btn" class="send-btn">Send</button>
+            </div>
+            <div class="env-indicator">
+              <span class="env-hint"
+                >💡 Press Tab to insert {{base_url}} | Available: base_url,
+                api_key, user_id</span
+              >
+            </div>
+            <div class="headers-input">
+              <textarea
+                placeholder='Headers (JSON format, optional)&#10;Example: {"Authorization": "Bearer {{api_key}}"}'
+              ></textarea>
+            </div>
+            <div class="body-input">
+              <textarea
+                placeholder="Request body (JSON format, optional)&#10;Supports variables: {{base_url}}, {{api_key}}, {{user_id}}"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="response-panel">
+            <div class="panel-header">
+              <h3>Intercepted Requests</h3>
+              <div id="gateway-usage-header" class="usage-header">0/20</div>
+              <div id="gate-latency-badge" class="latency-badge">0ms</div>
+            </div>
+            <div id="gate-requests-list" class="requests-list slots-container">
+              <!-- 5 request slots will be initialized here -->
+            </div>
+          </div>
+
+          <div class="payload-panel">
+            <div class="panel-header">
+              <h3>Payload Analysis</h3>
+              <button
+                id="gate-schema-btn"
+                class="schema-btn"
+                title="Copy TypeScript Schema to Clipboard"
+              >
+                📋 Schema
+              </button>
+            </div>
+            <div id="gate-headers-view" class="headers-view">
+              <!-- Headers with performance metrics will be displayed here -->
+            </div>
+            <div id="gate-payload-view" class="payload-view">
+              <!-- JSON payload will be displayed here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Archive View -->
+      <section id="archive-view" class="view">
+        <div class="archive-container">
+          <div class="archive-controls">
+            <div class="search-group">
+              <input
+                id="arch-search-input"
+                type="text"
+                class="search-input"
+                placeholder="Filter requests..."
+              />
+            </div>
+            <div class="action-buttons">
+              <button
+                id="arch-diff-btn"
+                class="action-btn"
+                title="Compare two requests"
+              >
+                🔍 Diff
+              </button>
+              <button
+                id="arch-compare-btn"
+                class="action-btn hidden"
+                title="Compare selected"
+              >
+                ⚖️ Compare
+              </button>
+              <button id="arch-replay-btn" class="action-btn pro-disabled" disabled>
+                🔄 Replay
+                <span class="pro-badge">PRO</span>
+                <span class="pro-tooltip">This feature will be unlocked in the full version</span>
+              </button>
+              <button id="arch-export-btn" class="action-btn">
+                Export Schema
+              </button>
+              <button id="arch-clear-btn" class="action-btn danger">
+                Clear Archive
+              </button>
+            </div>
+          </div>
+          <div id="arch-requests-list" class="archived-requests">
+            <!-- Archived requests will be displayed here with timestamps, latency, and performance badges -->
+          </div>
+          <div class="archive-legend">
+            <span class="legend-item"
+              ><span class="tag success">200</span> Success</span
+            >
+            <span class="legend-item"
+              ><span class="tag redirect">301</span> Redirect</span
+            >
+            <span class="legend-item"
+              ><span class="tag client-error">404</span> Client Error</span
+            >
+            <span class="legend-item"
+              ><span class="tag server-error">500</span> Server Error</span
+            >
+            <span class="legend-item"
+              ><span class="badge best">⚡</span> Fastest</span
+            >
+            <span class="legend-item"
+              ><span class="badge worst">🐢</span> Slowest</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- Stress View -->
+      <section id="stress-view" class="view">
+        <div class="stress-container">
+          <div class="stress-controls">
+            <div class="control-rows">
+              <div class="control-row">
+                <label class="control-label">URL Objetivo:</label>
+                <input
+                  id="stress-url-input"
+                  type="url"
+                  class="url-input"
+                  placeholder="https://api.example.com/endpoint"
+                  value="https://api.example.com/endpoint"
+                />
+              </div>
+              <!-- Beta configuration -->
+              <div class="control-row pro-disabled">
+                <label class="control-label">Requests:</label>
+                <select id="stress-count-input" class="count-select" disabled>
+                  <option value="10">10</option>
+                  <option value="20" selected>20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                <span class="pro-badge">PRO</span>
+              </div>
+              <div class="control-row pro-disabled">
+                <label class="control-label">RPS:</label>
+                <select id="stress-rps-input" class="rps-select" disabled>
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+                <span class="pro-badge">PRO</span>
+              </div>
+              <div class="control-row pro-disabled">
+                <label class="control-label">Error Threshold:</label>
+                <input
+                  id="stress-error-threshold-input"
+                  type="number"
+                  class="threshold-input"
+                  min="0"
+                  max="100"
+                  value="15"
+                  placeholder="15"
+                  disabled
+                />
+                <span class="pro-badge">PRO</span>
+              </div>
+            </div>
+            <div class="control-buttons">
+              <button id="stress-start-btn" class="start-btn">
+                ⚡ Iniciar Prueba
+              </button>
+              <button id="stress-stop-btn" class="stop-btn" disabled>
+                🛑 Parada Emergencia
+              </button>
+            </div>
+                      </div>
+          <div class="stress-visualization">
+            <div class="stress-stats-container">
+              <div id="stress-stats-view" class="stats-view expanded">
+                <div class="stat-item">
+                  <span class="stat-label">Caudal:</span>
+                  <span class="stat-value throughput">0 RPS</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Fatalidad:</span>
+                  <span class="stat-value error-rate">0%</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">P99 Latencia:</span>
+                  <span class="stat-value p99">0ms</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Consistencia:</span>
+                  <span class="stat-value jitter">0ms</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Éxitos:</span>
+                  <span class="stat-value success">0</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Errores:</span>
+                  <span class="stat-value error">0</span>
+                </div>
+              </div>
+              <div class="stress-progress-container">
+                <div class="progress-header">
+                  <span class="progress-label">Progreso del Test</span>
+                  <span
+                    class="progress-percentage"
+                    id="stress-progress-percentage"
+                    >0%</span
+                  >
+                </div>
+                <div class="progress-bar stress-progress">
+                  <div class="progress-fill" id="stress-progress-fill"></div>
+                </div>
+                <div class="progress-status" id="stress-progress-status">
+                  Listo para iniciar
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pulse View -->
+      <section id="pulse-view" class="view">
+        <div class="pulse-container">
+          <div class="pulse-controls">
+            <div class="control-row">
+              <div class="threshold-control">
+                <label class="threshold-label">Umbral P99 (ms):</label>
+                <input
+                  id="pl-thresh-inp"
+                  type="number"
+                  class="threshold-input modern"
+                  min="0"
+                  max="5000"
+                  value="300"
+                  placeholder="300"
+                />
+                <span class="threshold-hint"
+                  >⚡ Alertas cuando P99 > 300ms</span
+                >
+              </div>
+            </div>
+            <div class="control-row">
+              <div class="watchdog-control">
+                <label class="modern-checkbox">
+                  <input type="checkbox" id="pl-watchdog-toggle" checked />
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-text">Activar Watchdog</span>
+                </label>
+              </div>
+            </div>
+            <div class="control-buttons">
+              <button id="pulse-reset-btn" class="reset-btn">
+                🔄 Reiniciar Gráfico
+              </button>
+            </div>
+          </div>
+          <div id="pulse-graph-container" class="graph-container">
+            <canvas id="pulse-canvas" class="pulse-canvas"></canvas>
+            <div id="pulse-alert-overlay" class="alert-overlay hidden">
+              <div class="alert-content">
+                <span class="alert-icon">⚠️</span>
+                <span class="alert-message">P99 exceeded threshold!</span>
+              </div>
+            </div>
+          </div>
+          <div id="pulse-stats-view" class="pulse-stats">
+            <div class="stat-item">
+              <span class="stat-label">P50 (Median):</span>
+              <span class="stat-value p50">0ms</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">P90:</span>
+              <span class="stat-value p90">0ms</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">P99:</span>
+              <span class="stat-value p99">0ms</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Jitter:</span>
+              <span class="stat-value jitter">0ms</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Avg Latency:</span>
+              <span class="stat-value avg">0ms</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Requests:</span>
+              <span class="stat-value count">0</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="waitlist-view" class="view">
+        <div class="waitlist-minimal">
+          <!-- Minimal Hero -->
+          <div class="minimal-hero">
+            <div class="hero-center">
+              <div class="beta-indicator">
+                <span class="beta-dot"></span>
+                <span>Early Access</span>
+              </div>
+              <h1 class="minimal-title">Quantum-Flow</h1>
+              <p class="minimal-subtitle">Next-generation API testing platform</p>
+
+              <!-- Countdown -->
+              <div class="minimal-countdown">
+                <div class="countdown-label">Time remaining</div>
+                <div class="countdown-numbers">
+                  <span class="time-block" id="countdown-days">00</span>
+                  <span class="time-sep">:</span>
+                  <span class="time-block" id="countdown-hours">00</span>
+                  <span class="time-sep">:</span>
+                  <span class="time-block" id="countdown-minutes">00</span>
+                  <span class="time-sep">:</span>
+                  <span class="time-block" id="countdown-seconds">00</span>
+                </div>
+              </div>
+
+              <!-- CTA Button -->
+              <button class="minimal-cta" onclick="window.open('https://tally.so/r/RG80Ql', '_blank')">
+                <span class="cta-text">Request Early Access</span>
+                <span class="cta-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Features Grid -->
+          <div class="minimal-features">
+            <div class="feature-grid">
+              <div class="feature-card">
+                <div class="feature-emoji">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Real-time API testing with sub-millisecond precision</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-emoji">🔒</div>
+                <h3>Privacy First</h3>
+                <p>All processing happens locally in your browser</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-emoji">📊</div>
+                <h3>Deep Analytics</h3>
+                <p>Performance metrics and trend analysis</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-emoji">🔄</div>
+                <h3>Request Replay</h3>
+                <p>Archive and replay any API request instantly</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-emoji">⚡</div>
+                <h3>Stress Testing</h3>
+                <p>Load test APIs with configurable parameters</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-emoji">🌐</div>
+                <h3>Universal</h3>
+                <p>Works with any REST API or GraphQL endpoint</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Section -->
+          <div class="minimal-info">
+            <div class="info-cards">
+              <div class="info-card">
+                <h4>What you get</h4>
+                <ul>
+                  <li>Full beta access</li>
+                  <li>Priority support</li>
+                  <li>Development influence</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h4>Why now</h4>
+                <p>Limited spots available. Early adopters get special benefits and help shape the platform.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Legal View -->
+      <section id="legal-view" class="view">
+        <div class="legal-container">
+          <div class="legal-header">
+            <h2 class="legal-title">⚖️ Legal & Compliance</h2>
+            <p class="legal-subtitle">Complete transparency about our practices and your rights</p>
+          </div>
+
+          <div class="legal-tabs">
+            <button class="legal-tab active" data-tab="terms">Terms of Service</button>
+            <button class="legal-tab" data-tab="privacy">Privacy Policy</button>
+            <button class="legal-tab" data-tab="security">Security</button>
+            <button class="legal-tab" data-tab="compliance">Compliance</button>
+          </div>
+
+          <div class="legal-content">
+            <!-- Terms of Service -->
+            <div id="legal-terms" class="legal-section active">
+              <h3>Terms of Service</h3>
+              <div class="legal-text">
+                <h4>1. Acceptance of Terms</h4>
+                <p>By accessing and using Quantum-Flow, you accept and agree to be bound by the terms and provision of this agreement.</p>
+
+                <h4>2. Use License</h4>
+                <p>Permission is granted to temporarily download one copy of Quantum-Flow for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.</p>
+
+                <h4>3. Disclaimer</h4>
+                <p>The information on this application is provided on an as-is basis. Quantum-Flow makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+
+                <h4>4. Limitations</h4>
+                <p>In no event shall Quantum-Flow or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use Quantum-Flow.</p>
+
+                <h4>5. Accuracy of Materials</h4>
+                <p>The materials appearing on Quantum-Flow could include technical, typographical, or photographic errors. Quantum-Flow does not warrant that any of the materials on its application are accurate, complete, or current.</p>
+
+                <h4>6. Modifications</h4>
+                <p>Quantum-Flow may revise these terms of service for its application at any time without notice. By using this application, you are agreeing to be bound by the then current version of these terms of service.</p>
+
+                <h4>7. Governing Law</h4>
+                <p>These terms and conditions are governed by and construed in accordance with the laws of Spain and you irrevocably submit to the exclusive jurisdiction of the courts in that state or location.</p>
+              </div>
+            </div>
+
+            <!-- Privacy Policy -->
+            <div id="legal-privacy" class="legal-section">
+              <h3>Privacy Policy</h3>
+              <div class="legal-text">
+                <h4>1. Information We Collect</h4>
+                <p>Quantum-Flow processes webhook requests and network data for forensic analysis purposes. All data is processed locally in your browser and is not transmitted to external servers.</p>
+
+                <h4>2. Local Storage</h4>
+                <p>We use IndexedDB to store request data locally on your device. This data includes IP addresses, request headers, payload content, and performance metrics. You have full control over this data and can clear it at any time.</p>
+
+                <h4>3. No Third-Party Sharing</h4>
+                <p>Quantum-Flow does not sell, rent, or share your data with third parties. The only data that leaves your device is the webhook requests you explicitly choose to send.</p>
+
+                <h4>4. Data Security</h4>
+                <p>We implement industry-standard security measures including input validation, XSS prevention, and secure coding practices to protect your data.</p>
+
+                <h4>5. Your Rights</h4>
+                <p>You have the right to access, modify, or delete your data at any time. Simply use the clear archive function or clear your browser data.</p>
+
+                <h4>6. Cookies and Tracking</h4>
+                <p>Quantum-Flow does not use cookies or tracking technologies. The only storage used is local IndexedDB for functionality purposes.</p>
+
+                <h4>7. International Transfers</h4>
+                <p>Since all data is processed locally in your browser, no international data transfers occur.</p>
+              </div>
+            </div>
+
+            <!-- Security -->
+            <div id="legal-security" class="legal-section">
+              <h3>Security Measures</h3>
+              <div class="legal-text">
+                <h4>1. Client-Side Processing</h4>
+                <p>All data processing occurs locally in your browser. No sensitive information is transmitted to external servers.</p>
+
+                <h4>2. Input Validation</h4>
+                <p>We implement comprehensive input validation to prevent injection attacks and ensure data integrity.</p>
+
+                <h4>3. XSS Prevention</h4>
+                <p>All user inputs are properly escaped using textContent and HTML encoding to prevent cross-site scripting attacks.</p>
+
+                <h4>4. Secure Coding Practices</h4>
+                <p>We follow secure coding guidelines including no use of eval(), proper error handling, and memory management.</p>
+
+                <h4>5. Content Security Policy</h4>
+                <p>Our application implements strict content security policies to prevent malicious code execution.</p>
+
+                <h4>6. Regular Security Audits</h4>
+                <p>The codebase undergoes regular security audits to identify and address potential vulnerabilities.</p>
+              </div>
+            </div>
+
+            <!-- Compliance -->
+            <div id="legal-compliance" class="legal-section">
+              <h3>Compliance & Standards</h3>
+              <div class="legal-text">
+                <h4>1. GDPR Compliance</h4>
+                <p>Quantum-Flow is designed to be GDPR compliant. Since all data is processed locally in your browser, we do not collect or process personal data on our servers.</p>
+
+                <h4>2. CCPA Compliance</h4>
+                <p>Our privacy practices align with CCPA requirements. You have full control over your data and can request deletion at any time.</p>
+
+                <h4>3. Accessibility Standards</h4>
+                <p>Quantum-Flow is built to WCAG 2.1 Level AA standards for accessibility compliance.</p>
+
+                <h4>4. Data Protection</h4>
+                <p>We implement data protection by design and by default, ensuring privacy is built into our architecture.</p>
+
+                <h4>5. Industry Standards</h4>
+                <p>Our security practices follow industry standards including OWASP guidelines and secure development lifecycle.</p>
+
+                <h4>6. Transparency</h4>
+                <p>We maintain complete transparency about our data practices and provide clear documentation for all users.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legal-footer">
+            <div class="legal-contact">
+              <h4>Questions or Concerns?</h4>
+              <p>If you have any questions about these terms or our practices, please contact us.</p>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <span class="contact-label">Email:</span>
+                  <span class="contact-value">ramiadam140@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-label">Last Updated:</span>
+                  <span class="contact-value">May 2, 2026</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>
